@@ -47,9 +47,9 @@ const DotField = memo(({
     }
 
     function doResize() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
+      // Look directly at viewport dimensions rather than container element bounds
+      const w = window.innerWidth;
+      const h = window.innerHeight;
 
       canvas.width = w * dpr;
       canvas.height = h * dpr;
@@ -57,11 +57,12 @@ const DotField = memo(({
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+      // Reset offsets to zero since fixed viewports track window mouse values directly
       sizeRef.current = {
         w,
         h,
-        offsetX: rect.left + window.scrollX,
-        offsetY: rect.top + window.scrollY,
+        offsetX: 0,
+        offsetY: 0,
       };
 
       buildDots(w, h);
@@ -88,9 +89,9 @@ const DotField = memo(({
     }
 
     function onMouseMove(e) {
-      const s = sizeRef.current;
-      mouseRef.current.x = e.pageX - s.offsetX;
-      mouseRef.current.y = e.pageY - s.offsetY;
+      // Use standard viewport coordinate capture
+      mouseRef.current.x = e.clientX;
+      mouseRef.current.y = e.clientY;
     }
 
     function updateMouseSpeed() {
@@ -234,19 +235,24 @@ const DotField = memo(({
       <canvas
         ref={canvasRef}
         style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: -1,
+          pointerEvents: 'none'
         }}
       />
       <svg
         ref={svgRef}
         style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: -1,
           pointerEvents: 'none',
         }}
       >
