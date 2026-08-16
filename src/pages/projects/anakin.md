@@ -2,7 +2,6 @@
 layout: ../../layouts/Layout.astro
 title: Anakin
 summary: Autonomous Pick-and-Place robotic sorting system that uses computer vision, forward and inverse kinematics, and quintic trajectory planning.
-course: RBE 3001 — Unified Robotics III
 image: /robotics-portfolio/anakin.png
 tech: [MATLAB, Computer Vision, FK/IK, Image Processing]
 ---

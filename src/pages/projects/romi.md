@@ -2,7 +2,6 @@
 layout: ../../layouts/Layout.astro
 title: Romi
 summary: 2-DOF translational parallel manipulator for autonomous box pick-and-place on multi-level warehouse shelves, integrated with one brushed DC motor and two servo motors.
-course: RBE 2001 — Unified Robotics I
 image: /robotics-portfolio/rbe2001.png
 tech: [C++, FBD Analysis, 3D Printing, CAD, FEM Analysis]
 ---

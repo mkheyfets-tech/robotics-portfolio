@@ -1,473 +1,407 @@
 ---
 import MainLayout from '../layouts/Layout.astro';
+import DotField from '../components/DotField.jsx';
 
 // @ts-ignore
-const allProjects = Object.values(import.meta.glob('./projects/*.md', { eager: true })) as any[];
-
-const RESEARCH_TITLES = ['Nuclear Fusion Sentiment Analysis'];
-const engineering = allProjects.filter(p => !RESEARCH_TITLES.includes(p.frontmatter.title));
-const research = allProjects.filter(p => RESEARCH_TITLES.includes(p.frontmatter.title));
+const projects = Object.values(import.meta.glob('./projects/*.md', { eager: true })) as any[];
 ---
 <MainLayout>
-  <header class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Robotics Engineer</p>
-      <h1 class="hero-title">Hi, I&rsquo;m Mark.</h1>
-      <p class="hero-blurb">
-        I build robots and sometimes even the software that makes them move.
-        Currently studying Robotics Engineering at Worcester Polytechnic Institute.
-      </p>
-      <div class="hero-links">
-        <a href="mailto:mkheyfets@wpi.edu">Get in touch</a>
-        <a href="/robotics-portfolio/resume.pdf" target="_blank" rel="noopener">Resume</a>
-        <a href="https://github.com/mkheyfets-tech" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-
-    <div class="hero-portrait">
-      <img src="/robotics-portfolio/headshot.jpg" alt="Portrait of Mark" />
-    </div>
-  </header>
-
-  <section id="work" class="work" aria-labelledby="work-heading">
-    <div class="section-head">
-      <h2 id="work-heading" class="eyebrow">Selected work</h2>
-      <span class="section-count">{String(engineering.length).padStart(2, '0')} projects</span>
-    </div>
-
-    {engineering.map((project, i) => (
-      <a href={project.url} class:list={['work-item', 'reveal', { flip: i % 2 === 1 }]}>
-        <div class="work-media">
-          <img src={project.frontmatter.image} alt={project.frontmatter.title} loading="lazy" />
-        </div>
-        <div class="work-body">
-          <span class="work-index">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="work-title">{project.frontmatter.title}</h3>
-          <p class="work-summary">{project.frontmatter.summary}</p>
-          <dl class="work-spec">
-            {project.frontmatter.course && (
-              <div class="work-spec-row">
-                <dt>Course</dt>
-                <dd>{project.frontmatter.course}</dd>
-              </div>
-            )}
-            <div class="work-spec-row">
-              <dt>Stack</dt>
-              <dd>{project.frontmatter.tech.join(' · ')}</dd>
+    <header class="hero">
+      <DotField 
+          client:load 
+          dotRadius={1.5} 
+          dotSpacing={14} 
+          glowColor="rgba(99, 102, 241, 0.15)" 
+        />
+        
+        <div class="hero-left">
+          <div class="profile-wrapper">
+            <img src="/robotics-portfolio/headshot.jpg" alt="Mark - Robotics Engineer" class="profile-pic" />
+            <div class="profile-glow"></div>
+          </div>
+          
+          <div class="bio-text">
+            <h1>Hi, I'm Mark.</h1>
+            <h2>Robotics Engineer</h2>
+            <p>
+              I build robots and sometimes even the software that makes them move. 
+              Currently studying Robotics Engineering at Worcester Polytechnic Institute.
+            </p>
+            
+            <div class="hero-links">
+              <a href="mailto:mkheyfets@wpi.edu" class="btn-primary">Say Hello</a>
+              <a href="/robotics-portfolio/resume.pdf" target="_blank" class="btn-secondary">View Resume</a>
             </div>
-          </dl>
-          <span class="work-cta">View project<span class="work-arrow" aria-hidden="true">→</span></span>
+          </div>
         </div>
-      </a>
-    ))}
-  </section>
+      
+        <div class="hero-right">
+          <img src="/robotics-portfolio/wheel.svg" alt="Adaptation" class="adaptation-wheel" />
+        </div>
+    </header>
 
-  {research.length > 0 && (
-    <section id="research" class="work" aria-labelledby="research-heading">
-      <div class="section-head">
-        <h2 id="research-heading" class="eyebrow">Research &amp; strategy</h2>
-        <span class="section-count">{String(research.length).padStart(2, '0')} project</span>
+    <main class="portfolio-container">
+      <!-- FIRST TAB: Engineering Projects -->
+      <div class="section-header">
+        <h2>Tech Projects</h2>
+        <div class="header-line"></div>
       </div>
-
-      {research.map((project, i) => (
-        <a href={project.url} class:list={['work-item', 'reveal', { flip: i % 2 === 1 }]}>
-          <div class="work-media">
-            <img src={project.frontmatter.image} alt={project.frontmatter.title} loading="lazy" />
-          </div>
-          <div class="work-body">
-            <span class="work-index">{String(engineering.length + i + 1).padStart(2, '0')}</span>
-            <h3 class="work-title">{project.frontmatter.title}</h3>
-            <p class="work-summary">{project.frontmatter.summary}</p>
-            <dl class="work-spec">
-              {project.frontmatter.course && (
-                <div class="work-spec-row">
-                  <dt>Programme</dt>
-                  <dd>{project.frontmatter.course}</dd>
-                </div>
-              )}
-              <div class="work-spec-row">
-                <dt>Methods</dt>
-                <dd>{project.frontmatter.tech.join(' · ')}</dd>
+      
+      <div class="project-grid">
+          {projects.filter(p => p.frontmatter.title !== 'Nuclear Fusion Sentiment Analysis').map((project) => (
+            <a href={project.url} class="project-card">
+              <div class="thumbnail-wrapper">
+                <img src={project.frontmatter.image} alt={project.frontmatter.title} class="thumbnail" />
               </div>
-            </dl>
-            <span class="work-cta">View project<span class="work-arrow" aria-hidden="true">→</span></span>
-          </div>
-        </a>
-      ))}
-    </section>
-  )}
-
-  <section class="contact" aria-labelledby="contact-heading">
-    <p class="eyebrow" id="contact-heading">Get in touch</p>
-    <p class="contact-line">
-      Open to robotics internships and collaboration.
-      <a href="mailto:mkheyfets@wpi.edu">mkheyfets@wpi.edu</a>
-    </p>
-  </section>
+              
+              <div class="card-content">
+                <h3>{project.frontmatter.title}</h3>
+                <p>{project.frontmatter.summary}</p>
+                
+                <div class="tech-stack">
+                  {project.frontmatter.tech.map((tool: string) => (
+                    <span class="tech-badge">{tool}</span>
+                  ))}
+                </div>
+                
+                <span class="btn-learn-more">View Project &rarr;</span>
+              </div>
+            </a>
+          ))}
+      </div>
+  
+      <!-- SECOND TAB: Research & Strategy (Non-Tech) -->
+      <div class="section-header" style="margin-top: 5rem;">
+        <h2>Other Research</h2>
+        <div class="header-line"></div>
+      </div>
+      
+      <div class="project-grid">
+          {projects.filter(p => p.frontmatter.title === 'Nuclear Fusion Sentiment Analysis').map((project) => (
+            <a href={project.url} class="project-card">
+              <div class="thumbnail-wrapper">
+                <img src={project.frontmatter.image} alt={project.frontmatter.title} class="thumbnail" />
+              </div>
+              
+              <div class="card-content">
+                <h3>{project.frontmatter.title}</h3>
+                <p>{project.frontmatter.summary}</p>
+                
+                <div class="tech-stack">
+                  {project.frontmatter.tech.map((tool: string) => (
+                    <span class="tech-badge">{tool}</span>
+                  ))}
+                </div>
+                
+                <span class="btn-learn-more">View Project &rarr;</span>
+              </div>
+            </a>
+          ))}
+      </div>
+    </main>
 </MainLayout>
 
-<script>
-  // Header hairline appears only once the page has scrolled
-  const header = document.querySelector('.site-header');
-  const onScroll = () => header?.classList.toggle('is-stuck', window.scrollY > 8);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Quiet entrance — skipped entirely when the user prefers reduced motion
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const items = document.querySelectorAll('.reveal');
-
-  if (!reduce && 'IntersectionObserver' in window) {
-    document.documentElement.classList.add('js-reveal');
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
-    );
-    items.forEach((el) => io.observe(el));
-  }
-</script>
-
 <style>
-  /* ============================================================
-     HERO
-     ============================================================ */
-  .hero {
-    max-width: var(--shell);
+
+  :global(html.light-theme .hero-right) {
+    opacity: 0.5 !important; 
+  }
+
+  :global(html.light-theme .adaptation-wheel) {
+    filter: invert(1) !important; 
+  }
+
+  .hero, .portfolio-container {
+    max-width: 3000px; 
+    width: 90%; 
     margin: 0 auto;
-    padding: clamp(3.5rem, 11vw, 8rem) var(--gutter) clamp(4rem, 10vw, 7rem) var(--gutter);
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: end;
+  }
+
+  .hero {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 8rem 0 6rem 0;
+  }
+
+  .hero-left {
+    display: flex;
+    gap: 3.5rem; 
+    align-items: center;
     position: relative;
-    z-index: var(--z-content);
+    z-index: 2;
   }
 
-  .hero-copy { grid-column: 1 / 8; }
-
-  .hero-title {
-    font-size: clamp(3.25rem, 11vw, 7.5rem);
-    margin: 0.75rem 0 0 -0.05em;
+  /* Softer, more premium profile picture treatment */
+  .profile-wrapper {
+    position: relative;
+    flex-shrink: 0; 
   }
 
-  .hero-blurb {
-    margin: clamp(1.75rem, 3vw, 2.5rem) 0 0 0;
-    max-width: 44ch;
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-    line-height: 1.6;
-    color: var(--ink-soft);
+  .profile-pic {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    border: 4px solid var(--bg-main);
+    box-shadow: var(--shadow-hover);
   }
 
+  .profile-glow {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: linear-gradient(135deg, var(--accent), transparent);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.4;
+    filter: blur(15px);
+  }
+
+  .bio-text {
+    text-align: left; 
+    max-width: 540px;
+  }
+
+  .bio-text h1 {
+    font-size: 3.5rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-main);
+  }
+
+  .bio-text h2 {
+    font-size: 1.35rem;
+    color: var(--accent);
+    margin: 0 0 1.25rem 0;
+    font-weight: 500;
+  }
+
+  .bio-text p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+  }
+
+  /* Refined Contact Buttons */
   .hero-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: clamp(1.25rem, 3vw, 2.25rem);
-    margin-top: clamp(2rem, 4vw, 3rem);
+    gap: 1.25rem;
   }
 
-  .hero-links a {
-    position: relative;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .btn-primary, .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 99px; /* Pill shape for a friendlier feel */
     text-decoration: none;
-    color: var(--ink);
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--rule-strong);
-    transition: color 0.25s ease, border-color 0.25s ease;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .hero-links a:hover {
-    color: var(--signal);
-    border-bottom-color: var(--signal);
+  .btn-primary {
+    background-color: var(--accent);
+    color: white; 
+    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
   }
 
-  .hero-portrait {
-    grid-column: 9 / 13;
-    align-self: end;
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.23);
   }
 
-  .hero-portrait img {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: center 22%;
-    display: block;
-    border-radius: 2px;
-    filter: var(--img-tone);
-    transition: filter 0.6s ease;
+  .btn-secondary {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-base);
   }
 
-  .hero-portrait img:hover { filter: none; }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
 
-  /* ============================================================
-     WORK INDEX
-     Full-width alternating rows rather than a card grid.
-     ============================================================ */
-  .work {
-    max-width: var(--shell);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
+  /* The Mahoraga Wheel */
+  .hero-right {
+    opacity: 0.15; 
+    align-self: flex-start; 
+    margin-top: 1rem;
     position: relative;
-    z-index: var(--z-content);
+    z-index: 1;
   }
 
-  .work + .work { margin-top: clamp(5rem, 11vw, 9rem); }
+  .adaptation-wheel {
+    width: 120px;
+    height: 120px;
+    animation: heavy-crank 8s cubic-bezier(0.65, 0, 0.35, 1) infinite; 
+    transition: filter 0.5s ease, opacity 0.5s ease;
+  }
 
-  .section-head {
+  @keyframes heavy-crank {
+    0%, 80% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Section Header Styling */
+  .section-header {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-bottom: 1.1rem;
-    margin-bottom: clamp(3rem, 7vw, 5rem);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .section-count {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-
-  .work-item {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(1.5rem, 4vw, 3.5rem);
     align-items: center;
-    text-decoration: none;
-    color: inherit;
-    margin-bottom: clamp(5rem, 11vw, 9rem);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
 
-  .work-item:last-child { margin-bottom: 0; }
-
-  .work-media {
-    grid-column: 1 / 8;
-    overflow: hidden;
-    border-radius: 2px;
-    border: 1px solid var(--rule);
-    background: var(--paper-raised);
-  }
-
-  .work-media img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    display: block;
-    filter: var(--img-tone);
-    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
-  }
-
-  .work-body { grid-column: 8 / 13; }
-
-  /* Alternate sides so the eye zig-zags down the page */
-  .work-item.flip .work-media { grid-column: 6 / 13; grid-row: 1; }
-  .work-item.flip .work-body { grid-column: 1 / 6; grid-row: 1; }
-
-  /* Index reads as a small superior numeral against the serif title */
-  .work-index {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    color: var(--ink-faint);
-    vertical-align: 1.4em;
-    margin-right: 0.6rem;
-    transition: color 0.3s ease;
-  }
-
-  .work-title {
-    font-size: clamp(2rem, 3.6vw, 3rem);
-    line-height: 1.05;
+  .section-header h2 {
+    font-size: 2rem;
     margin: 0;
-    display: inline;
-    background-image: linear-gradient(var(--signal), var(--signal));
-    background-repeat: no-repeat;
-    background-size: 0% 1px;
-    background-position: 0 100%;
-    transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    padding-bottom: 0.08em;
+    color: var(--text-main);
   }
 
-  .work-summary {
-    margin: 1.25rem 0 0 0;
-    color: var(--ink-soft);
-    font-size: 0.98rem;
-    line-height: 1.6;
-    max-width: 42ch;
+  .header-line {
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-color), transparent);
   }
 
-  .work-spec {
-    margin: 1.75rem 0 0 0;
-    border-top: 1px solid var(--rule);
-  }
-
-  .work-spec-row {
+  /* Modern Grid Layout */
+  .project-grid {
     display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 1rem;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--rule);
+    /* Fixed Card Size: Replaced 1fr with minmax(280px, 350px) to prevent wide stretching */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 350px)); 
+    justify-content: start;
+    gap: 2.5rem;
+    padding-bottom: 6rem;
   }
 
-  .work-spec dt {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    padding-top: 0.15rem;
+  /* Premium Card Design */
+  .project-card {
+    display: flex;
+    flex-direction: column;             
+    text-decoration: none;      
+    color: inherit;             
+    background-color: var(--bg-card);
+    border-radius: 16px; /* Softer corners */
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-base);
   }
 
-  .work-spec dd {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    line-height: 1.55;
-    color: var(--ink-soft);
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(99, 102, 241, 0.3);
   }
 
-  .work-cta {
+  .thumbnail-wrapper {
+    width: 100%;
+    background-color: var(--bg-card);
+    transition: background-color 0.4s ease;
+    overflow: hidden; 
+  }
+
+  .thumbnail {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .project-card:hover .thumbnail {
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .card-content h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.4rem;
+    color: var(--text-main);
+  }
+
+  .card-content p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Pushes the tags/button to the bottom */
+  }
+
+  /* Tinted Soft Badges */
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tech-badge {
+    background-color: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-learn-more {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    margin-top: 1.75rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink);
+    color: var(--accent);
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    transition: gap 0.2s ease;
+    gap: 0.25rem;
   }
 
-  .work-arrow {
-    display: inline-block;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .project-card:hover .btn-learn-more {
+    gap: 0.5rem; /* The arrow slides to the right smoothly */
   }
 
-  .work-item:hover .work-media img,
-  .work-item:focus-visible .work-media img {
-    transform: scale(1.035);
-    filter: none;
-  }
+  /* Mobile Responsiveness */
+  @media (max-width: 900px) {
 
-  .work-item:hover .work-title,
-  .work-item:focus-visible .work-title { background-size: 100% 1px; }
+    .project-grid {
+      justify-content: center;
+    }
 
-  .work-item:hover .work-arrow,
-  .work-item:focus-visible .work-arrow { transform: translateX(6px); }
-
-  .work-item:hover .work-cta,
-  .work-item:focus-visible .work-cta { color: var(--signal); }
-
-  .work-item:hover .work-index,
-  .work-item:focus-visible .work-index { color: var(--signal); }
-
-  /* ============================================================
-     CONTACT
-     ============================================================ */
-  .contact {
-    max-width: var(--shell);
-    margin: clamp(6rem, 14vw, 11rem) auto 0 auto;
-    padding: clamp(3rem, 7vw, 5rem) var(--gutter) 0 var(--gutter);
-    position: relative;
-    z-index: var(--z-content);
-  }
-
-  /* Rule is inset to the gutter so it lines up with the content edge
-     rather than the padding box */
-  .contact::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: var(--gutter);
-    right: var(--gutter);
-    height: 1px;
-    background: var(--rule);
-  }
-
-  .contact-line {
-    font-family: var(--font-display);
-    font-size: clamp(1.75rem, 4.5vw, 3.25rem);
-    line-height: 1.15;
-    letter-spacing: -0.015em;
-    margin: 1.25rem 0 0 0;
-    max-width: 22ch;
-  }
-
-  .contact-line a {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rule-strong);
-    transition: color 0.25s ease, border-color 0.25s ease;
-    white-space: nowrap;
-  }
-
-  .contact-line a:hover {
-    color: var(--signal);
-    border-bottom-color: var(--signal);
-  }
-
-  /* ============================================================
-     ENTRANCE
-     ============================================================ */
-  :global(html.js-reveal) .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  :global(html.js-reveal) .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* ============================================================
-     RESPONSIVE
-     ============================================================ */
-  @media (max-width: 1000px) {
-    .hero-copy { grid-column: 1 / 9; }
-    .hero-portrait { grid-column: 9 / 13; }
-    .work-body,
-    .work-item.flip .work-body { grid-column: 8 / 13; grid-row: 1; }
-    .work-media,
-    .work-item.flip .work-media { grid-column: 1 / 8; grid-row: 1; }
-  }
-
-  @media (max-width: 760px) {
     .hero {
-      padding-top: clamp(2.5rem, 9vw, 4rem);
-      align-items: start;
+      flex-direction: column-reverse;
+      text-align: center;
+      gap: 3rem;
+      padding: 4rem 0;
     }
-    .hero-copy { grid-column: 1 / 13; grid-row: 2; }
-    .hero-portrait {
-      grid-column: 1 / 8;
-      grid-row: 1;
-      margin-bottom: 0.5rem;
+    .hero-left {
+      flex-direction: column;
+      gap: 2rem;
     }
-    .hero-portrait img { aspect-ratio: 3 / 2; object-position: center 25%; }
-
-    .work-item { gap: 1.5rem; }
-    .work-media,
-    .work-item.flip .work-media {
-      grid-column: 1 / 13;
-      grid-row: 1;
+    .bio-text {
+      max-width: 100%;
     }
-    .work-body,
-    .work-item.flip .work-body {
-      grid-column: 1 / 13;
-      grid-row: 2;
+    .bio-text h1 {
+      font-size: 2.75rem;
     }
-    .work-summary { max-width: none; }
+    .hero-links {
+      justify-content: center;
+    }
+    .hero-right {
+      align-self: center; 
+      margin-top: 0; 
+    }
+    .section-header h2 {
+      font-size: 1.75rem;
+    }
   }
 </style>

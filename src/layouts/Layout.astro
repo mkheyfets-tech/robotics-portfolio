@@ -1,13 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 const { frontmatter, title } = Astro.props;
-
-const isProject = Boolean(frontmatter);
-const pageTitle = frontmatter?.title ? `${frontmatter.title} — Mark` : (title || "Mark — Robotics Engineer");
-const pageDescription = frontmatter?.summary || "Robotics engineering portfolio — manipulation, perception and controls projects by Mark, a Robotics Engineering student at Worcester Polytechnic Institute.";
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = frontmatter?.image ? new URL(frontmatter.image, Astro.site) : new URL('/robotics-portfolio/headshot.jpg', Astro.site);
-const currentYear = new Date().getFullYear();
+const pageTitle = frontmatter?.title || title || "Mark's Robotics Portfolio";
 ---
 <!doctype html>
 <html lang="en">
@@ -16,88 +10,37 @@ const currentYear = new Date().getFullYear();
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-
+        
         <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={canonicalURL} />
-        <meta name="theme-color" content="#100f0e" />
-
-        <meta property="og:type" content={isProject ? "article" : "website"} />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={ogImage} />
-        <meta property="og:url" content={canonicalURL} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
 
         <ClientRouter />
 
+        {/* Web Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
         <script is:inline>
           if (typeof localStorage !== 'undefined' && localStorage.getItem('theme') === 'light') {
             document.documentElement.classList.add('light-theme');
-          }
+          } 
         </script>
     </head>
     <body>
-        <a href="#main" class="skip-link">Skip to content</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
 
-        <header class="site-header">
-          <a href="https://mkheyfets-tech.github.io/robotics-portfolio/" class="wordmark">Mark</a>
-          <nav class="site-nav" aria-label="Primary">
-            <a href="https://mkheyfets-tech.github.io/robotics-portfolio/#work">Work</a>
-            <a href="/robotics-portfolio/resume.pdf" target="_blank" rel="noopener">Resume</a>
-            <a href="mailto:mkheyfets@wpi.edu">Email</a>
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle colour theme">
-              <span class="to-light">Light</span>
-              <span class="to-dark">Dark</span>
-            </button>
+        {frontmatter && (
+          <nav class="top-nav">
+            <a href="https://mkheyfets-tech.github.io/robotics-portfolio/" class="btn-back">&larr; Back to Portfolio</a>
           </nav>
-        </header>
-
-        <main id="main">
-          <article class:list={{ 'project-wrapper': isProject }}>
-            {isProject && (
-              <Fragment>
-                <a href="https://mkheyfets-tech.github.io/robotics-portfolio/#work" class="btn-back">Back to work</a>
-
-                <header class="project-head">
-                  {frontmatter.course && <p class="eyebrow">{frontmatter.course}</p>}
-                  <h1>{frontmatter.title}</h1>
-                  {frontmatter.summary && <p class="lede">{frontmatter.summary}</p>}
-
-                  {frontmatter.tech && (
-                    <dl class="spec">
-                      <div class="spec-row">
-                        <dt>Stack</dt>
-                        <dd>{frontmatter.tech.join(' · ')}</dd>
-                      </div>
-                    </dl>
-                  )}
-                </header>
-              </Fragment>
-            )}
-
-            <div class:list={{ prose: isProject }}>
-              <slot />
-            </div>
-          </article>
-        </main>
-
-        <footer class="site-footer">
-          <div class="footer-mark">
-            <img src="/robotics-portfolio/wheel.svg" alt="" aria-hidden="true" class="footer-wheel" />
-            <span>© {currentYear} Mark</span>
-          </div>
-          <div class="footer-links">
-            <a href="mailto:mkheyfets@wpi.edu">mkheyfets@wpi.edu</a>
-            <a href="https://github.com/mkheyfets-tech" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </footer>
+        )}
+      
+        <div class={frontmatter ? "project-wrapper" : ""}>
+          <slot />
+        </div>
 
         <script>
           document.addEventListener('astro:after-swap', () => {
@@ -111,10 +54,11 @@ const currentYear = new Date().getFullYear();
             if (toggleBtn) {
               toggleBtn.addEventListener('click', () => {
                 document.documentElement.classList.toggle('light-theme');
-                localStorage.setItem(
-                  'theme',
-                  document.documentElement.classList.contains('light-theme') ? 'light' : 'dark'
-                );
+                if (document.documentElement.classList.contains('light-theme')) {
+                  localStorage.setItem('theme', 'light');
+                } else {
+                  localStorage.setItem('theme', 'dark');
+                }
               });
             }
           });
@@ -123,375 +67,70 @@ const currentYear = new Date().getFullYear();
 </html>
 
 <style is:global>
-    /* ============================================================
-       PALETTE
-       Near-monochrome ink on paper. One signal colour, used only
-       for interactive affordances — never as decoration.
-       ============================================================ */
+    /* COLOR PALETTE */
     :root {
-      --paper: #100f0e;
-      --paper-raised: #171615;
-      --ink: #eceae6;
-      --ink-soft: #9a948c;
-      --ink-faint: #635e58;
-      --rule: rgba(236, 234, 230, 0.13);
-      --rule-strong: rgba(236, 234, 230, 0.26);
-      --signal: #e8683f;
-      --grain-opacity: 0.045;
-      /* Images sit slightly back from the page until hovered, so a bright
-         CAD render doesn't punch a white hole in a dark layout. */
-      --img-tone: grayscale(0.22) brightness(0.9) contrast(1.02);
-
-      --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
-      --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-      --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-
-      --measure: 62ch;
-      --gutter: clamp(1.25rem, 5vw, 4.5rem);
-      --shell: 1240px;
-
-      --z-content: 1;
-      --z-header: 40;
-      --z-grain: 60;
-      --z-skip: 80;
+      /* Dark Theme - Warmer, richer zinc tones */
+      --bg-main: #18181b;      
+      --bg-card: #27272a;      
+      --text-main: #f4f4f5;    
+      --text-muted: #a1a1aa;   
+      --accent: #6366f1;       /* A sophisticated, softer indigo */
+      --accent-hover: #4f46e5; 
+      --border-color: rgba(255, 255, 255, 0.08);
+      --badge-bg: rgba(99, 102, 241, 0.15); 
+      --badge-text: #818cf8;
+      --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
     }
 
     html.light-theme {
-      --paper: #f2f0ec;
-      --paper-raised: #ffffff;
-      --ink: #171614;
-      --ink-soft: #635e57;
-      --ink-faint: #969087;
-      --rule: rgba(23, 22, 20, 0.14);
-      --rule-strong: rgba(23, 22, 20, 0.3);
-      --signal: #c9502a;
-      --grain-opacity: 0.03;
-      --img-tone: grayscale(0.18) contrast(1.01);
+      /* Light Theme - Soft, organic off-white (stone) */
+      --bg-main: #fafaf9;      
+      --bg-card: #ffffff;      
+      --text-main: #1c1917;    
+      --text-muted: #57534e;   
+      --accent: #4f46e5;       
+      --accent-hover: #4338ca; 
+      --border-color: rgba(0, 0, 0, 0.06);
+      --badge-bg: rgba(79, 70, 229, 0.1);
+      --badge-text: #4338ca;
+      --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
     }
 
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 6rem;
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
     }
-
-    html, body { margin: 0; width: 100%; }
 
     body {
-      position: relative;
-      min-height: 100dvh;
-      background-color: var(--paper);
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-size: 1.0625rem;
-      line-height: 1.65;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.4s ease, color 0.4s ease;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      transition: background-color 0.35s ease, color 0.35s ease;
     }
 
-    /* Faint grain so large flat areas don't read as plastic */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: var(--z-grain);
-      pointer-events: none;
-      opacity: var(--grain-opacity);
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    /* Clean typography for headings */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
     }
 
-    h1, h2, h3, h4 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      letter-spacing: -0.015em;
-      line-height: 1.02;
-      text-wrap: balance;
-      margin: 0;
-    }
-
-    p { text-wrap: pretty; }
-
-    a { color: inherit; text-underline-offset: 0.25em; }
-
-    ::selection {
-      background: var(--signal);
-      color: #fff;
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--signal);
-      outline-offset: 3px;
-      border-radius: 2px;
-    }
-
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      z-index: var(--z-skip);
-      background: var(--ink);
-      color: var(--paper);
-      padding: 0.75rem 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      text-decoration: none;
-    }
-    .skip-link:focus {
-      left: 1rem;
-      top: 1rem;
-    }
-
-    /* Small caps-ish mono label used throughout */
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin: 0;
-    }
-
-    /* ============================================================
-       HEADER
-       ============================================================ */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: var(--z-header);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 1.35rem var(--gutter);
-      background: color-mix(in srgb, var(--paper) 82%, transparent);
-      backdrop-filter: blur(12px) saturate(1.1);
-      -webkit-backdrop-filter: blur(12px) saturate(1.1);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-
-    .site-header.is-stuck { border-bottom-color: var(--rule); }
-
-    .wordmark {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: clamp(1rem, 2.5vw, 2rem);
-    }
-
-    .site-nav a,
-    .theme-toggle {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: var(--ink-soft);
-      text-decoration: none;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: color 0.2s ease;
-      position: relative;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Hairline separates the theme control from the navigation proper */
-    .theme-toggle {
-      padding-left: clamp(1rem, 2.5vw, 2rem);
-      margin-left: calc(-1 * clamp(1rem, 2.5vw, 2rem) / 2);
-    }
-
-    .theme-toggle::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 12px;
-      background: var(--rule);
-    }
-
-    .site-nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -4px;
-      height: 1px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .site-nav a:hover { color: var(--ink); }
-    .site-nav a:hover::after { transform: scaleX(1); }
-    .theme-toggle:hover { color: var(--ink); }
-
-    .to-dark { display: none; }
-    html.light-theme .to-light { display: none; }
-    html.light-theme .to-dark { display: inline; }
-
-    /* ============================================================
-       PROJECT PAGES
-       ============================================================ */
-    .project-wrapper {
-      max-width: var(--shell);
-      margin: 0 auto;
-      padding: clamp(2rem, 6vw, 4.5rem) var(--gutter) 0 var(--gutter);
-      position: relative;
-      z-index: var(--z-content);
-    }
-
-    .btn-back {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      text-decoration: none;
-      transition: color 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .btn-back::before { content: '← '; }
-    .btn-back:hover { color: var(--ink); transform: translateX(-3px); }
-
-    /* Matches the prose measure so the spec rules line up with the
-       section rules further down the page */
-    .project-head {
-      max-width: var(--measure);
-      margin: clamp(2.5rem, 6vw, 4rem) 0 clamp(2.5rem, 5vw, 3.5rem) 0;
-    }
-
-    .project-head h1 {
-      font-size: clamp(2.75rem, 7vw, 5rem);
-      margin: 0.5rem 0 0 0;
-    }
-
-    .project-head .lede {
-      font-size: clamp(1.1rem, 1.9vw, 1.4rem);
-      line-height: 1.5;
-      color: var(--ink-soft);
-      max-width: 46ch;
-      margin: 1.75rem 0 0 0;
-    }
-
-    .spec {
-      margin: 2.5rem 0 0 0;
-      border-top: 1px solid var(--rule);
-    }
-
-    .spec-row {
-      display: grid;
-      grid-template-columns: 8rem 1fr;
-      gap: 1.5rem;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .spec dt {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      padding-top: 0.2rem;
-    }
-
-    .spec dd {
-      margin: 0;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      line-height: 1.6;
-      color: var(--ink-soft);
-    }
-
-    /* Long-form body copy */
-    .prose {
-      max-width: var(--measure);
-      color: var(--ink-soft);
-      padding-bottom: 2rem;
-    }
-
-    .prose h1, .prose h2, .prose h3 {
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      line-height: 1.4;
-      margin: 3.5rem 0 1.25rem 0;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--rule);
-    }
-
-    .prose p { margin: 0 0 1.4rem 0; }
-
-    .prose strong { color: var(--ink); font-weight: 500; }
-
-    .prose ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1.4rem 0;
-    }
-
-    .prose li {
-      position: relative;
-      padding-left: 1.5rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .prose li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.72em;
-      width: 8px;
-      height: 1px;
-      background: var(--signal);
-    }
-
-    .prose a:not(.btn-report) {
-      color: var(--ink);
-      text-decoration-color: var(--rule-strong);
-    }
-    .prose a:not(.btn-report):hover { text-decoration-color: var(--signal); }
-
-    /* Author-supplied inline image borders are hardcoded dark; neutralise
-       them so light mode doesn't get a stray near-black hairline. */
-    .prose img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 2px !important;
-      border: 1px solid var(--rule) !important;
-      filter: var(--img-tone);
-      transition: filter 0.5s ease;
-    }
-    .prose img:hover { filter: none; }
-
+	/* Video Player */
     .video-wrapper {
       width: 100%;
       margin: 2.5rem 0;
-      border-radius: 2px;
+      border-radius: 12px;
       overflow: hidden;
-      border: 1px solid var(--rule);
-      background-color: var(--paper-raised);
+      box-shadow: var(--shadow-base);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-card);
     }
 
     .video-wrapper iframe {
@@ -502,105 +141,131 @@ const currentYear = new Date().getFullYear();
       border: none;
     }
 
-    /* Report link — a rule-underlined text link, not a glossy button */
+    /* Softened Theme Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: var(--shadow-base);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .theme-toggle:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .moon-icon { display: none; }
+    html.light-theme .sun-icon { display: none; }
+    html.light-theme .moon-icon { display: block; }
+
+    /* Navigation */
+    .top-nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem 0 2rem; 
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-muted); 
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-base);
+      transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+      color: var(--accent);
+      transform: translateX(-4px); 
+      border-color: var(--accent);
+    }
+
+    .project-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.75;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    .project-wrapper h1, .project-wrapper h2, .project-wrapper h3 {
+      color: var(--text-main);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-wrapper img {
+      box-shadow: var(--shadow-base);
+    }
+
+    @media (max-width: 768px) {
+      .theme-toggle {
+        top: 1.5rem;
+        right: 1.5rem;
+      }
+    }
+
+	/* PDF Report Button */
     .btn-report {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      margin-top: 2rem;
-      padding: 0 0 0.5rem 0;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ink);
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: #ffffff;
+      padding: 0.85rem 1.5rem;
+      border-radius: 10px; 
       text-decoration: none;
-      border-bottom: 1px solid var(--rule-strong);
-      transition: border-color 0.25s ease, color 0.25s ease;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      font-size: 1.05rem;
+      
+      /* The human touch: A subtle dark border and a white inner-shadow to create a 3D lip */
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 4px 12px rgba(99, 102, 241, 0.25);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 2rem;
+    }
+
+    html.light-theme .btn-report {
+       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 12px rgba(79, 70, 229, 0.2);
+       border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .btn-report:hover {
-      color: var(--signal);
-      border-bottom-color: var(--signal);
+      transform: translateY(-2px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 16px rgba(99, 102, 241, 0.35);
+      filter: brightness(1.05);
     }
 
-    .btn-report svg { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
-    .btn-report:hover svg { transform: translateY(2px); }
-
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    .site-footer {
-      max-width: var(--shell);
-      margin: clamp(5rem, 12vw, 9rem) auto 0 auto;
-      padding: 2rem var(--gutter) 3rem var(--gutter);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.04em;
-      color: var(--ink-faint);
-      position: relative;
-      z-index: var(--z-content);
+    .btn-report svg {
+      transition: transform 0.3s ease;
     }
 
-    /* Inset to the gutter so it aligns with content, not the padding box */
-    .site-footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: var(--gutter);
-      right: var(--gutter);
-      height: 1px;
-      background: var(--rule);
-    }
-
-    .footer-mark {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
-    /* Quiet easter egg, kept from the previous build */
-    .footer-wheel {
-      width: 22px;
-      height: 22px;
-      opacity: 0.4;
-      animation: heavy-crank 14s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-    }
-
-    html.light-theme .footer-wheel { filter: invert(1); }
-
-    @keyframes heavy-crank {
-      0%, 82% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .footer-links { display: flex; gap: 1.75rem; }
-
-    .footer-links a {
-      color: var(--ink-faint);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .footer-links a:hover { color: var(--ink); }
-
-    @media (max-width: 720px) {
-      .site-header { padding-inline: var(--gutter); }
-      .site-nav { gap: 1rem; }
-      .spec-row { grid-template-columns: 1fr; gap: 0.35rem; }
-      .site-footer { flex-direction: column; align-items: flex-start; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+    .btn-report:hover svg {
+      transform: translateY(-2px);
     }
 </style>
+
+
+
+
