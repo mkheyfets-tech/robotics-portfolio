@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://majeidn.github.io',
+  site: 'https://mkheyfets-tech.github.io',
   base: '/robotics-portfolio',
   integrations: [react()],
 });

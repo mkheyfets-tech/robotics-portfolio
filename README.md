@@ -1,46 +1,61 @@
-# Astro Starter Kit: Basics
+# robotics-portfolio
 
-```sh
-npm create astro@latest -- --template basics
-```
+Personal portfolio site — robotics engineering projects, built with [Astro](https://astro.build) and deployed to GitHub Pages at
+[mkheyfets-tech.github.io/robotics-portfolio](https://mkheyfets-tech.github.io/robotics-portfolio/).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+public/              images, PDFs, favicon (served from /robotics-portfolio/…)
+src/
+├── components/
+│   └── DotField.jsx     interactive cursor dot-field (currently unused — see below)
+├── layouts/
+│   └── Layout.astro     design system, site header/footer, project page shell
+└── pages/
+    ├── index.astro      hero + work index
+    ├── 404.astro
+    └── projects/*.md    one markdown file per project
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Adding a project
 
-## 🧞 Commands
+Drop a new `.md` file into `src/pages/projects/`. It gets picked up automatically
+by the work index on the homepage. Frontmatter:
 
-All commands are run from the root of the project, from a terminal:
+```yaml
+---
+layout: ../../layouts/Layout.astro
+title: Project name
+summary: One or two sentences, shown on the index and as the page lede.
+course: RBE 3001 — Unified Robotics III   # optional, shown in the spec list
+image: /robotics-portfolio/thumbnail.png
+tech: [C++, PID Control, CAD]
+---
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+The layout renders the title, lede and spec table from frontmatter, so the
+markdown body should start straight into content — no `# Title` needed.
 
-## 👀 Want to learn more?
+To list a project under **Research & strategy** rather than **Selected work**,
+add its title to the `RESEARCH_TITLES` array at the top of `src/pages/index.astro`.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Design notes
+
+- Type: Instrument Serif (display) / IBM Plex Sans (body) / IBM Plex Mono (labels).
+- Colour lives in `:root` and `html.light-theme` in `Layout.astro`. The palette is
+  deliberately near-monochrome — `--signal` is the only accent and is reserved for
+  interactive states, so adding it as decoration will flatten the hierarchy.
+- Theme preference persists in `localStorage` and is applied before first paint.
+
+`DotField.jsx` is kept but no longer mounted. To bring it back, import it in
+`index.astro` and render `<DotField client:load />` inside `.hero`.
+
+## Commands
+
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                          |
+| `npm run dev`     | Dev server at `localhost:4321`                |
+| `npm run build`   | Production build to `./dist/`                 |
+| `npm run preview` | Preview the production build locally          |
