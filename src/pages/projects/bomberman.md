@@ -4,16 +4,16 @@ title: Bomberman Escape AI
 summary: Autonomous Python agents that combine A* and minimax search for navigation with reinforcement learning for bomb placement and hazard avoidance.
 image: /robotics-portfolio/bomberman.svg
 tech: [Python, A* Search, Minimax, Reinforcement Learning]
-order: 100
+order: -1
 ---
 
 # Bomberman Escape AI
 
 <img
   src="/robotics-portfolio/bomberman.svg"
-  alt="Illustration of a Bomberman grid with an agent, a planned route, obstacles, a bomb, and an exit."
-  width="960"
-  height="600"
+  alt="Project 2, Variant 2 map with the original game sprites, four wall barriers, a random monster, and the exit."
+  width="1006"
+  height="910"
   style="width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border-color); margin: 1.5rem 0;"
 />
 

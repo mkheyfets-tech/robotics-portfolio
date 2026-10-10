@@ -1,51 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
-<title id="title">Bomberman Escape AI</title>
-<desc id="desc">A schematic game board showing a planned escape route around walls, monsters, and a bomb.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1006" height="910" viewBox="0 0 1006 910" role="img" aria-labelledby="title desc">
+<title id="title">Bomberman: Project 2, Variant 2</title>
+<desc id="desc">The original eight-column, nineteen-row game map, using the original game sprites. The player starts at the top left, a random monster starts at column four, row ten, and the exit is at the bottom right. Four complete rows of destructible walls block the route.</desc>
 <defs>
-  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#24243d"/><stop offset="1" stop-color="#18181b"/></linearGradient>
-  <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="52" height="52" rx="8" fill="#2c2c40"/></pattern>
-</defs>
-<rect width="960" height="600" fill="url(#bg)"/>
-<g font-family="Arial, sans-serif">
-  <text x="56" y="68" fill="#a5b4fc" font-size="18" font-weight="700" letter-spacing="4">AUTONOMOUS AGENTS</text>
-  <text x="56" y="122" fill="#f4f4f5" font-size="42" font-weight="700">Bomberman Escape AI</text>
-  <text x="56" y="157" fill="#a1a1aa" font-size="20">Plan a route. Anticipate danger. Reach the exit.</text>
-</g>
-<g transform="translate(56 204)">
-  <rect width="560" height="336" rx="12" fill="url(#grid)"/>
-<rect x="62" y="62" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="118" y="62" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="230" y="6" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="230" y="62" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="230" y="118" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="62" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="118" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="174" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="342" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="398" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="454" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="342" y="286" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-<rect x="398" y="286" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
-  <path d="M28 28H196V140H140V252H308V84H532V252" fill="none" stroke="#818cf8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 12"/>
-  <rect x="10" y="10" width="36" height="36" rx="11" fill="#c7d2fe"/>
-  <rect x="16" y="19" width="24" height="13" rx="5" fill="#35335c"/>
-  <circle cx="23" cy="25" r="2" fill="white"/><circle cx="33" cy="25" r="2" fill="white"/>
-  <rect x="512" y="230" width="40" height="44" rx="8" fill="#34d399"/>
-  <path d="M523 252h18m-7-7 7 7-7 7" fill="none" stroke="#064e3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="364" cy="252" r="20" fill="#18181b" stroke="#fbbf24" stroke-width="3"/>
-  <path d="M368 232q-2-18 12-18" fill="none" stroke="#fbbf24" stroke-width="3"/>
-  <path d="m380 206 0 8 8-4m-8 4 6 7" stroke="#fbbf24" stroke-width="2"/>
-  <rect x="456" y="120" width="38" height="37" rx="12" fill="#fb7185"/>
-  <circle cx="467" cy="134" r="4" fill="#4c0519"/><circle cx="483" cy="134" r="4" fill="#4c0519"/>
-</g>
-<g transform="translate(666 234)" font-family="Arial, sans-serif">
-  <text fill="#f4f4f5" font-size="24" font-weight="700">Search + learning</text>
-  <text y="43" fill="#a1a1aa" font-size="19">A* pathfinding</text>
-  <text y="79" fill="#a1a1aa" font-size="19">Minimax search</text>
-  <text y="115" fill="#a1a1aa" font-size="19">Reinforcement learning</text>
-  <path d="M0 149H238" stroke="#45455d"/>
-  <circle cy="184" r="6" fill="#818cf8"/><text x="19" y="190" fill="#c7d2fe" font-size="18">Planned route</text>
-  <circle cy="224" r="6" fill="#fbbf24"/><text x="19" y="230" fill="#c7d2fe" font-size="18">Bomb placement</text>
-  <circle cy="264" r="6" fill="#34d399"/><text x="19" y="270" fill="#c7d2fe" font-size="18">Escape objective</text>
-</g>
-</svg>
+<image id="wall" width="44" height="44" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4wIIDTMW6xf7MQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAADbSURBVHja7dtBDsMgDERRY/WEcE6f0d1EVasCVVhV42+JTbLxPAGJItIiIu2teu+mWK216XW34gVAhem/XRqZmSWCsgewB0zrsbsZEbJTnxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6tT0o+euQoTzAqsYYfxnm5GSrq4Q/7c1Vwp/26ErhT3p1tfB3e3bF8Ld6z02ZmcS4fg2cjuU/QxXeAZZLoEr4KUCl8F8A1cJ/AFQM/wKoGt7MrF2PA74HVK0nrshz+2SPY2EAAAAASUVORK5CYII="/>
+<image id="bomberman" width="44" height="44" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAABFCAYAAAAcjSspAAAABmJLR0QA8AB+AG8yFdKxAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4wIIDggkHTT70AAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAFrSURBVHja7ZtLEsFAEEBNZM/RuIOsOQHFCVhzBzkae6nYoEiVych090jq9U6lZtKe15PMhxspRl3XtUa/zjmnmXc2IoASZGJfSsaylDBFwxRrMyzMwRSghEUu2dl1s/r4PN0dvqp8WS+9ZfdL28l23w9TfF+q7XpMW8oHKEABClCAAhSgAKVDtL2x+q7HtGWWzCyZMSWtbRqdWpWU1qo+pliZom2M9r6PS/FLLM63IFineZ4kP8ontSmhhqQ2BlOkTQkZSIuyEk34OBurD8S5FoyU8cyvKxwnCUXailh7ukLJhmaJRK75EGHElhJPH6AABShAAQpQgNLbCaFvj6V5guhfXvObJ6reI+TAD6ZIQ3GPKMoqmSVPQ4uyeuXDmMJACxSg9OqRHBJdV+mlQ2rVH1OAYlg+FlsdFlsb5lBiE7a4B+UDFKAABShAGTgUiUel9jk3TGkJkX+b+tZEJcPqPpgCFKAABShAsY87MjSKlYwxnV0AAAAASUVORK5CYII="/>
+<image id="monster" width="44" height="44" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA8AB+AG8yFdKxAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4wIIDhkyujltkQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAILSURBVHja7ZtbbsQgDEWxlf92p+0KOmpX0O60XQH9GimTIfiBITyM1K+ojO/JtT0wADHG0GIAgOiDYozQJK5aAKSCrwJiDsBaeG0QJgBqi64JoxiAVPzvx1v2+evXT1MIagBc4ZRganCBaEGoAHDElwrXgNBAEAGghFuL1sKQgMDRxHM+S1KXWA7ITdhSuNQNHCfgyOKpGDhOyDrgbIIehEvckHMCWudfr24QA0i9/Z7F52LMpQL29NX2itUozmD9klhxFutrU2GzsP7L5/fps7/be5EQ67kBIO67As5kfU3sOKt4rgacufJzOgKGxQdaV34AePgzfnOquXMdwR0wa/HjanIHrFT9U3XAHbBC/me7QQghrgIghOddI08BB+AAHIADcACZNjFzCwzhsCdoNWlqHH+BOi5nqefSRQ7bASUnLHpwS0kMMUbAkcVbxIKtxO0tnbI39bwWpK3lm6KE1RDOckCqDszUDVJa7pqX/x6w7YlIdofu7edqp2ja4N7xDydESrfHW8EojUn02+DItYAT+3YkU7JJWjstLHarjgU/eUhqhjMClPXFq8GRUkESK3JsMsM404SSfxjBBVzrqzdEeoagiY08K9z7UVlKOJXOqM2dEfYDOLWMfV+gp+PyHPjcQs6uAdSELd1geWHCr8z4pSm/NucXJ02DWvLqbAsQw1yetgLSakH2DyoUYy68b54TAAAAAElFTkSuQmCC"/>
+<image id="portal" width="44" height="44" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4wIIDiMhGy7yNgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAKvSURBVHja7VtLjsIwDKUGiUtwDCQkTsElZsdx2HGJuQQjIeYYHIJZjDqrSJ0SJ89OaOKULKs28Xv2c/Nz97hdFlO0433XS94/ba7dFHZ1ryJACjgXIevtvv/5/oLJW00J/HxYQn18fP6y/eaODDYCJANyoFHAGkJykbF6hcdDwDkwoW/ds/G3x/uuD5HAyWH4nToCxsA50DHAsYb267MTyQeqJIiADwHXkIWMoZGEiIAYcA6ANheg/aUQAROgAS/JBdK8kYuE7nG7RLUyBB8bOFcuQPsJ2YOQECUgFfwrkmBOEoIS4MBLDMjZJA7gSBg7m6QDlwIvHRtNvNF5ADcRmRK4NBp89nJSIKnuawCP5p/hM266TtrQd89KgI+NL5ECIXN7jbZKtJjDfNhIG/olPS91UEgKpA392ppWCpTCrFUpeAlAd3Jq9L7UYUOslHMzo1YphLARkvmtt9AfgSSTCWsNwUOajGrR45z9JGWwhSj4RwBygGExHyA2H++7nlrytiYqqOXsj2CjlvWPYKEW9S+xnRYzb28C3gQkTiQsT4KCBLS+GFIth1v8HdIcJkChiCDkANFiVCA2nzbXjrTaaWUyRCh7VjdFY/aTdiPBqvfHz8hpYW6LIYdZtBy2QIp0V5vGjMQ+tHw26MNKOTqsWfvi02GkgxqjQHuYS1xopJ671xT6oZsiFNKHNSnEHOTDlnQ6fD4si0YCN77qdFgrhVJyQO4pIZekoHuCtVyTQ8bz2Rr6xVOqtqaMBu1FyfV236+3+14cAcMo0IKv4aqsA++7DvxEgO9l65elkwkYk4Bq38x1eYQALQkpeaFYwUSOeiHTJTNIyVyNRVOa2kJ12ZwbxA3K/Sql8wRpLkitHcxSOmu5cFJFAFpioyUE3czI0bITgBCRIrncrZt7+fwfYu6xm2E32wcAAAAASUVORK5CYII="/>
+</defs><rect width="1006" height="910" fill="#202025"/><g transform="translate(327 37)"><rect width="352" height="836" fill="rgb(65,132,15)"/>
+<use xlink:href="#wall" x="0" y="132"/>
+<use xlink:href="#wall" x="44" y="132"/>
+<use xlink:href="#wall" x="88" y="132"/>
+<use xlink:href="#wall" x="132" y="132"/>
+<use xlink:href="#wall" x="176" y="132"/>
+<use xlink:href="#wall" x="220" y="132"/>
+<use xlink:href="#wall" x="264" y="132"/>
+<use xlink:href="#wall" x="308" y="132"/>
+<use xlink:href="#wall" x="0" y="308"/>
+<use xlink:href="#wall" x="44" y="308"/>
+<use xlink:href="#wall" x="88" y="308"/>
+<use xlink:href="#wall" x="132" y="308"/>
+<use xlink:href="#wall" x="176" y="308"/>
+<use xlink:href="#wall" x="220" y="308"/>
+<use xlink:href="#wall" x="264" y="308"/>
+<use xlink:href="#wall" x="308" y="308"/>
+<use xlink:href="#wall" x="0" y="484"/>
+<use xlink:href="#wall" x="44" y="484"/>
+<use xlink:href="#wall" x="88" y="484"/>
+<use xlink:href="#wall" x="132" y="484"/>
+<use xlink:href="#wall" x="176" y="484"/>
+<use xlink:href="#wall" x="220" y="484"/>
+<use xlink:href="#wall" x="264" y="484"/>
+<use xlink:href="#wall" x="308" y="484"/>
+<use xlink:href="#wall" x="0" y="660"/>
+<use xlink:href="#wall" x="44" y="660"/>
+<use xlink:href="#wall" x="88" y="660"/>
+<use xlink:href="#wall" x="132" y="660"/>
+<use xlink:href="#wall" x="176" y="660"/>
+<use xlink:href="#wall" x="220" y="660"/>
+<use xlink:href="#wall" x="264" y="660"/>
+<use xlink:href="#wall" x="308" y="660"/>
+<use xlink:href="#portal" x="308" y="792"/>
+<use xlink:href="#bomberman" x="0" y="0"/>
+<use xlink:href="#monster" x="132" y="396"/>
+</g></svg>
