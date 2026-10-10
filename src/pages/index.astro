@@ -22,8 +22,12 @@ const research = projects.filter(p => p.frontmatter.category === 'research');
     </aside>
   </section>
   <div class="focus-strip shell" aria-label="Areas of focus"><span>FROM HARDWARE TO BEHAVIOR</span><p>Robot control <i>/</i> Computer vision <i>/</i> Motion planning <i>/</i> Applied AI</p></div>
+  <section id="about" class="about-section shell" aria-labelledby="about-title">
+    <div><p class="eyebrow">01 / A LITTLE ABOUT ME</p><h2 id="about-title">I like working where<br />disciplines overlap<span class="accent">.</span></h2></div>
+    <div class="about-copy"><p>I'm studying Robotics Engineering at Worcester Polytechnic Institute and also pursuing my MS at WPI, with expected completion in 2028. My projects span robot mechanisms, embedded control, computer vision, and autonomous decision-making.</p><p>I enjoy connecting those pieces: understanding the mechanics, writing the control logic, and seeing how the system behaves in practice. Research with OpenStar also gave me a chance to explore how people understand and respond to new technology.</p><a class="text-link" href={`${base}/resume.pdf`} target="_blank" rel="noopener noreferrer">More about my experience ↗</a></div>
+  </section>
   <section id="projects" class="work-section shell" aria-labelledby="work-title">
-    <div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">Engineering in practice<span class="accent">.</span></h2></div><p>Four projects. Different problems.<br />A hands-on approach to each.</p></div>
+    <div class="section-heading"><div><p class="eyebrow">02 / SELECTED WORK</p><h2 id="work-title">Engineering in practice<span class="accent">.</span></h2></div></div>
     <div class="project-grid">
       {engineering.map((project, index) => (
         <a href={project.url} class="project-card">
@@ -37,12 +41,8 @@ const research = projects.filter(p => p.frontmatter.category === 'research');
     </div>
   </section>
   <section class="research-section shell" aria-labelledby="research-title">
-    <div class="section-heading"><div><p class="eyebrow">02 / BEYOND THE BUILD</p><h2 id="research-title">Technology meets people<span class="accent">.</span></h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">03 / BEYOND THE BUILD</p><h2 id="research-title">Technology meets people<span class="accent">.</span></h2></div></div>
     {research.map(project => <a class="research-card" href={project.url}><div class="research-image"><img src={project.frontmatter.image} width="1006" height="910" alt="OpenStar fusion research project" loading="lazy" /></div><div class="research-copy"><p class="eyebrow">RESEARCH & COMMUNICATION</p><h3>{project.frontmatter.title}</h3><p>{project.frontmatter.summary}</p><div class="tags">{project.frontmatter.tech.map((tool: string) => <span>{tool}</span>)}</div><span class="card-link">Read the research <span aria-hidden="true">↗</span></span></div></a>)}
-  </section>
-  <section id="about" class="about-section shell" aria-labelledby="about-title">
-    <div><p class="eyebrow">03 / A LITTLE ABOUT ME</p><h2 id="about-title">I like working where<br />disciplines overlap<span class="accent">.</span></h2></div>
-    <div class="about-copy"><p>I'm studying Robotics Engineering at Worcester Polytechnic Institute. My projects span robot mechanisms, embedded control, computer vision, and autonomous decision-making.</p><p>I enjoy connecting those pieces: understanding the mechanics, writing the control logic, and seeing how the system behaves in practice. Research with OpenStar also gave me a chance to explore how people understand and respond to new technology.</p><a class="text-link" href={`${base}/resume.pdf`} target="_blank" rel="noopener noreferrer">More about my experience ↗</a></div>
   </section>
   <section class="contact-section shell" aria-labelledby="contact-title"><div><p class="eyebrow">LET'S CONNECT</p><h2 id="contact-title">Have something in mind?</h2><p>I'd be glad to talk about robotics, engineering, or a project you're working on.</p></div><a class="button" href="mailto:mkheyfets@wpi.edu">Get in touch <span aria-hidden="true">↗</span></a></section>
 </MainLayout>
