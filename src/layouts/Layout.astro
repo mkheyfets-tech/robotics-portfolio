@@ -1,271 +1,84 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
 const { frontmatter, title } = Astro.props;
-const pageTitle = frontmatter?.title || title || "Mark's Robotics Portfolio";
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/`;
+const pageTitle = frontmatter ? `${frontmatter.title} — Mark Kheyfets` : title || 'Mark Kheyfets — Robotics Engineering';
+const description = frontmatter?.summary || 'Robotics engineering portfolio of Mark Kheyfets. Projects in robot control, computer vision, autonomous planning, and applied research.';
 ---
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        
-        <title>{pageTitle}</title>
-
-        <ClientRouter />
-
-        {/* Web Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-        <script is:inline>
-          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme') === 'light') {
-            document.documentElement.classList.add('light-theme');
-          } 
-        </script>
-    </head>
-    <body>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
-          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </button>
-
-        {frontmatter && (
-          <nav class="top-nav">
-            <a href="https://mkheyfets-tech.github.io/robotics-portfolio/" class="btn-back">&larr; Back to Portfolio</a>
-          </nav>
-        )}
-      
-        <div class={frontmatter ? "project-wrapper" : ""}>
-          <slot />
-        </div>
-
-        <script>
-          document.addEventListener('astro:after-swap', () => {
-            if (localStorage.getItem('theme') === 'light') {
-              document.documentElement.classList.add('light-theme');
-            }
-          });
-
-          document.addEventListener('astro:page-load', () => {
-            const toggleBtn = document.getElementById('theme-toggle');
-            if (toggleBtn) {
-              toggleBtn.addEventListener('click', () => {
-                document.documentElement.classList.toggle('light-theme');
-                if (document.documentElement.classList.contains('light-theme')) {
-                  localStorage.setItem('theme', 'light');
-                } else {
-                  localStorage.setItem('theme', 'dark');
-                }
-              });
-            }
-          });
-        </script>
-      </body>
-</html>
-
-<style is:global>
-    /* COLOR PALETTE */
-    :root {
-      /* Dark Theme - Warmer, richer zinc tones */
-      --bg-main: #18181b;      
-      --bg-card: #27272a;      
-      --text-main: #f4f4f5;    
-      --text-muted: #a1a1aa;   
-      --accent: #6366f1;       /* A sophisticated, softer indigo */
-      --accent-hover: #4f46e5; 
-      --border-color: rgba(255, 255, 255, 0.08);
-      --badge-bg: rgba(99, 102, 241, 0.15); 
-      --badge-text: #818cf8;
-      --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
-    }
-
-    html.light-theme {
-      /* Light Theme - Soft, organic off-white (stone) */
-      --bg-main: #fafaf9;      
-      --bg-card: #ffffff;      
-      --text-main: #1c1917;    
-      --text-muted: #57534e;   
-      --accent: #4f46e5;       
-      --accent-hover: #4338ca; 
-      --border-color: rgba(0, 0, 0, 0.06);
-      --badge-bg: rgba(79, 70, 229, 0.1);
-      --badge-text: #4338ca;
-      --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-    }
-
-    html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-      transition: background-color 0.4s ease, color 0.4s ease;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Clean typography for headings */
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-	/* Video Player */
-    .video-wrapper {
-      width: 100%;
-      margin: 2.5rem 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow-base);
-      border: 1px solid var(--border-color);
-      background-color: var(--bg-card);
-    }
-
-    .video-wrapper iframe {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      display: block;
-      border: none;
-    }
-
-    /* Softened Theme Toggle */
-    .theme-toggle {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 1000;
-      box-shadow: var(--shadow-base);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .theme-toggle:hover {
-      color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .moon-icon { display: none; }
-    html.light-theme .sun-icon { display: none; }
-    html.light-theme .moon-icon { display: block; }
-
-    /* Navigation */
-    .top-nav {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 3rem 2rem 0 2rem; 
-    }
-
-    .btn-back {
-      display: inline-flex;
-      align-items: center;
-      color: var(--text-muted); 
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-base);
-      transition: all 0.3s ease;
-    }
-
-    .btn-back:hover {
-      color: var(--accent);
-      transform: translateX(-4px); 
-      border-color: var(--accent);
-    }
-
-    .project-wrapper {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem;
-      line-height: 1.75;
-      font-size: 1.05rem;
-      color: var(--text-muted);
-    }
-
-    .project-wrapper h1, .project-wrapper h2, .project-wrapper h3 {
-      color: var(--text-main);
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-wrapper img {
-      box-shadow: var(--shadow-base);
-    }
-
-    @media (max-width: 768px) {
-      .theme-toggle {
-        top: 1.5rem;
-        right: 1.5rem;
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f4f0" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{pageTitle}</title>
+    <ClientRouter />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (() => {
+        let theme = 'light';
+        try { theme = localStorage.getItem('theme') || 'light'; } catch {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header shell">
+      <a class="brand" href={home} aria-label="Mark Kheyfets, home"><span class="monogram">MK<span>.</span></span><span class="brand-name">Mark Kheyfets<span>Robotics Engineering</span></span></a>
+      <nav aria-label="Main navigation">
+        <a href={`${home}#projects`}>Projects</a>
+        <a href={`${home}#about`}>About</a>
+        <a href={`${base}/resume.pdf`} target="_blank" rel="noopener noreferrer">Resume <span aria-hidden="true">↗</span></a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false"><svg class="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg></button>
+      </nav>
+    </header>
+    {frontmatter ? (
+      <main id="main" class="project-main shell">
+        <a href={`${home}#projects`} class="back-link">← All projects</a>
+        <header class="project-heading">
+          <p class="eyebrow">{frontmatter.discipline || 'Engineering project'}</p>
+          <h1>{frontmatter.title}</h1>
+          <p class="project-deck">{frontmatter.summary}</p>
+          <div class="project-meta"><span>{frontmatter.context}</span><div class="tags">{frontmatter.tech.map((tool: string) => <span>{tool}</span>)}</div></div>
+        </header>
+        <article class="project-body"><slot /></article>
+        <a class="back-link project-end" href={`${home}#projects`}>← Explore the other projects</a>
+      </main>
+    ) : <main id="main"><slot /></main>}
+    <footer class="site-footer shell">
+      <div><a class="footer-name" href={home}>Mark Kheyfets<span>.</span></a><p>Robotics, software, and the space between.</p></div>
+      <div class="footer-links"><a href="mailto:mkheyfets@wpi.edu">Email ↗</a><a href="https://github.com/mkheyfets-tech" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={`${base}/resume.pdf`} target="_blank" rel="noopener noreferrer">Resume ↗</a></div>
+    </footer>
+    <script>
+      function storedTheme() {
+        try { return localStorage.getItem('theme') || 'light'; } catch { return 'light'; }
       }
-    }
-
-	/* PDF Report Button */
-    .btn-report {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-hover) 100%);
-      color: #ffffff;
-      padding: 0.85rem 1.5rem;
-      border-radius: 10px; 
-      text-decoration: none;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 500;
-      font-size: 1.05rem;
-      
-      /* The human touch: A subtle dark border and a white inner-shadow to create a 3D lip */
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 4px 12px rgba(99, 102, 241, 0.25);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-top: 2rem;
-    }
-
-    html.light-theme .btn-report {
-       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 12px rgba(79, 70, 229, 0.2);
-       border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-report:hover {
-      transform: translateY(-2px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 16px rgba(99, 102, 241, 0.35);
-      filter: brightness(1.05);
-    }
-
-    .btn-report svg {
-      transition: transform 0.3s ease;
-    }
-
-    .btn-report:hover svg {
-      transform: translateY(-2px);
-    }
-</style>
-
-
-
-
+      function syncTheme() {
+        const dark = document.documentElement.dataset.theme === 'dark';
+        const button = document.getElementById('theme-toggle');
+        button?.setAttribute('aria-pressed', String(dark));
+        button?.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} theme`);
+      }
+      document.addEventListener('astro:after-swap', () => {
+        document.documentElement.dataset.theme = storedTheme();
+        syncTheme();
+      });
+      document.addEventListener('astro:page-load', () => {
+        syncTheme();
+        document.getElementById('theme-toggle')?.addEventListener('click', () => {
+          const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
+          try { localStorage.setItem('theme', theme); } catch {}
+          syncTheme();
+        });
+      });
+    </script>
+  </body>
+</html>

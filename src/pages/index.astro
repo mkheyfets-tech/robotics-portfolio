@@ -1,408 +1,48 @@
 ---
 import MainLayout from '../layouts/Layout.astro';
-import DotField from '../components/DotField.jsx';
-
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // @ts-ignore
 const projects = (Object.values(import.meta.glob('./projects/*.md', { eager: true })) as any[])
   .sort((a, b) => (a.frontmatter.order ?? 0) - (b.frontmatter.order ?? 0));
+const engineering = projects.filter(p => p.frontmatter.category !== 'research');
+const research = projects.filter(p => p.frontmatter.category === 'research');
 ---
 <MainLayout>
-    <header class="hero">
-      <DotField 
-          client:load 
-          dotRadius={1.5} 
-          dotSpacing={14} 
-          glowColor="rgba(99, 102, 241, 0.15)" 
-        />
-        
-        <div class="hero-left">
-          <div class="profile-wrapper">
-            <img src="/robotics-portfolio/headshot.jpg" alt="Mark - Robotics Engineer" class="profile-pic" />
-            <div class="profile-glow"></div>
-          </div>
-          
-          <div class="bio-text">
-            <h1>Hi, I'm Mark.</h1>
-            <h2>Robotics Engineer</h2>
-            <p>
-              I build robots and sometimes even the software that makes them move. 
-              Currently studying Robotics Engineering at Worcester Polytechnic Institute.
-            </p>
-            
-            <div class="hero-links">
-              <a href="mailto:mkheyfets@wpi.edu" class="btn-primary">Say Hello</a>
-              <a href="/robotics-portfolio/resume.pdf" target="_blank" class="btn-secondary">View Resume</a>
-            </div>
-          </div>
-        </div>
-      
-        <div class="hero-right">
-          <img src="/robotics-portfolio/wheel.svg" alt="Adaptation" class="adaptation-wheel" />
-        </div>
-    </header>
-
-    <main class="portfolio-container">
-      <!-- FIRST TAB: Engineering Projects -->
-      <div class="section-header">
-        <h2>Tech Projects</h2>
-        <div class="header-line"></div>
-      </div>
-      
-      <div class="project-grid">
-          {projects.filter(p => p.frontmatter.title !== 'Nuclear Fusion Sentiment Analysis').map((project) => (
-            <a href={project.url} class="project-card">
-              <div class="thumbnail-wrapper">
-                <img src={project.frontmatter.image} alt={project.frontmatter.title} class="thumbnail" />
-              </div>
-              
-              <div class="card-content">
-                <h3>{project.frontmatter.title}</h3>
-                <p>{project.frontmatter.summary}</p>
-                
-                <div class="tech-stack">
-                  {project.frontmatter.tech.map((tool: string) => (
-                    <span class="tech-badge">{tool}</span>
-                  ))}
-                </div>
-                
-                <span class="btn-learn-more">View Project &rarr;</span>
-              </div>
-            </a>
-          ))}
-      </div>
-  
-      <!-- SECOND TAB: Research & Strategy (Non-Tech) -->
-      <div class="section-header" style="margin-top: 5rem;">
-        <h2>Other Research</h2>
-        <div class="header-line"></div>
-      </div>
-      
-      <div class="project-grid">
-          {projects.filter(p => p.frontmatter.title === 'Nuclear Fusion Sentiment Analysis').map((project) => (
-            <a href={project.url} class="project-card">
-              <div class="thumbnail-wrapper">
-                <img src={project.frontmatter.image} alt={project.frontmatter.title} class="thumbnail" />
-              </div>
-              
-              <div class="card-content">
-                <h3>{project.frontmatter.title}</h3>
-                <p>{project.frontmatter.summary}</p>
-                
-                <div class="tech-stack">
-                  {project.frontmatter.tech.map((tool: string) => (
-                    <span class="tech-badge">{tool}</span>
-                  ))}
-                </div>
-                
-                <span class="btn-learn-more">View Project &rarr;</span>
-              </div>
-            </a>
-          ))}
-      </div>
-    </main>
+  <section class="hero shell" aria-labelledby="intro-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="small-cross" aria-hidden="true">+</span> ROBOTICS / SOFTWARE / AUTONOMY</p>
+      <h1 id="intro-title">Making robots<br />sense, plan<span class="accent">,</span><br />and move<span class="accent">.</span></h1>
+      <p class="hero-intro">I'm Mark, a robotics engineering student at WPI. I work across mechanical design and software to turn sensor data into useful action.</p>
+      <div class="hero-actions"><a class="button" href="#projects">Explore my work <span aria-hidden="true">↓</span></a><a class="text-link" href={`${base}/resume.pdf`} target="_blank" rel="noopener noreferrer">View resume <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <aside class="hero-portrait" aria-label="About Mark">
+      <div class="portrait-frame"><img src={`${base}/headshot.jpg`} width="640" height="640" alt="Mark Kheyfets" fetchpriority="high" /><span class="portrait-corner" aria-hidden="true">+</span></div>
+      <div class="portrait-caption"><span>MARK KHEYFETS</span><span>WORCESTER, MA</span></div>
+      <p>Curious about how things work.<br />More curious about making them work.</p>
+    </aside>
+  </section>
+  <div class="focus-strip shell" aria-label="Areas of focus"><span>FROM HARDWARE TO BEHAVIOR</span><p>Robot control <i>/</i> Computer vision <i>/</i> Motion planning <i>/</i> Applied AI</p></div>
+  <section id="projects" class="work-section shell" aria-labelledby="work-title">
+    <div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">Engineering in practice<span class="accent">.</span></h2></div><p>Four projects. Different problems.<br />A hands-on approach to each.</p></div>
+    <div class="project-grid">
+      {engineering.map((project, index) => (
+        <a href={project.url} class="project-card">
+          <div class={`project-image ${project.frontmatter.imageClass || ''}`}><img src={project.frontmatter.image} alt={project.frontmatter.imageAlt || project.frontmatter.title} width="1006" height="910" loading="lazy" /><span class="image-arrow" aria-hidden="true">↗</span></div>
+          <div class="card-heading"><p class="eyebrow">{project.frontmatter.discipline}</p><span class={index === 0 ? "latest-label" : "project-number"}>{index === 0 ? "LATEST PROJECT" : `0${index + 1}`}</span></div>
+          <h3>{project.frontmatter.title}</h3><p class="card-summary">{project.frontmatter.summary}</p>
+          <div class="tags">{project.frontmatter.tech.map((tool: string) => <span>{tool}</span>)}</div>
+          <span class="card-link">Explore project <span aria-hidden="true">↗</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="research-section shell" aria-labelledby="research-title">
+    <div class="section-heading"><div><p class="eyebrow">02 / BEYOND THE BUILD</p><h2 id="research-title">Technology meets people<span class="accent">.</span></h2></div></div>
+    {research.map(project => <a class="research-card" href={project.url}><div class="research-image"><img src={project.frontmatter.image} width="1006" height="910" alt="OpenStar fusion research project" loading="lazy" /></div><div class="research-copy"><p class="eyebrow">RESEARCH & COMMUNICATION</p><h3>{project.frontmatter.title}</h3><p>{project.frontmatter.summary}</p><div class="tags">{project.frontmatter.tech.map((tool: string) => <span>{tool}</span>)}</div><span class="card-link">Read the research <span aria-hidden="true">↗</span></span></div></a>)}
+  </section>
+  <section id="about" class="about-section shell" aria-labelledby="about-title">
+    <div><p class="eyebrow">03 / A LITTLE ABOUT ME</p><h2 id="about-title">I like working where<br />disciplines overlap<span class="accent">.</span></h2></div>
+    <div class="about-copy"><p>I'm studying Robotics Engineering at Worcester Polytechnic Institute. My projects span robot mechanisms, embedded control, computer vision, and autonomous decision-making.</p><p>I enjoy connecting those pieces: understanding the mechanics, writing the control logic, and seeing how the system behaves in practice. Research with OpenStar also gave me a chance to explore how people understand and respond to new technology.</p><a class="text-link" href={`${base}/resume.pdf`} target="_blank" rel="noopener noreferrer">More about my experience ↗</a></div>
+  </section>
+  <section class="contact-section shell" aria-labelledby="contact-title"><div><p class="eyebrow">LET'S CONNECT</p><h2 id="contact-title">Have something in mind?</h2><p>I'd be glad to talk about robotics, engineering, or a project you're working on.</p></div><a class="button" href="mailto:mkheyfets@wpi.edu">Get in touch <span aria-hidden="true">↗</span></a></section>
 </MainLayout>
-
-<style>
-
-  :global(html.light-theme .hero-right) {
-    opacity: 0.5 !important; 
-  }
-
-  :global(html.light-theme .adaptation-wheel) {
-    filter: invert(1) !important; 
-  }
-
-  .hero, .portfolio-container {
-    max-width: 3000px; 
-    width: 90%; 
-    margin: 0 auto;
-  }
-
-  .hero {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    padding: 8rem 0 6rem 0;
-  }
-
-  .hero-left {
-    display: flex;
-    gap: 3.5rem; 
-    align-items: center;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Softer, more premium profile picture treatment */
-  .profile-wrapper {
-    position: relative;
-    flex-shrink: 0; 
-  }
-
-  .profile-pic {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    z-index: 2;
-    border: 4px solid var(--bg-main);
-    box-shadow: var(--shadow-hover);
-  }
-
-  .profile-glow {
-    position: absolute;
-    top: -5%;
-    left: -5%;
-    width: 110%;
-    height: 110%;
-    background: linear-gradient(135deg, var(--accent), transparent);
-    border-radius: 50%;
-    z-index: 1;
-    opacity: 0.4;
-    filter: blur(15px);
-  }
-
-  .bio-text {
-    text-align: left; 
-    max-width: 540px;
-  }
-
-  .bio-text h1 {
-    font-size: 3.5rem;
-    margin: 0 0 0.5rem 0;
-    color: var(--text-main);
-  }
-
-  .bio-text h2 {
-    font-size: 1.35rem;
-    color: var(--accent);
-    margin: 0 0 1.25rem 0;
-    font-weight: 500;
-  }
-
-  .bio-text p {
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 2rem;
-    font-size: 1.05rem;
-  }
-
-  /* Refined Contact Buttons */
-  .hero-links {
-    display: flex;
-    gap: 1.25rem;
-  }
-
-  .btn-primary, .btn-secondary {
-    padding: 0.75rem 1.5rem;
-    border-radius: 99px; /* Pill shape for a friendlier feel */
-    text-decoration: none;
-    font-weight: 500;
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.05rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .btn-primary {
-    background-color: var(--accent);
-    color: white; 
-    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.23);
-  }
-
-  .btn-secondary {
-    background-color: var(--bg-card);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-base);
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* The Mahoraga Wheel */
-  .hero-right {
-    opacity: 0.15; 
-    align-self: flex-start; 
-    margin-top: 1rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .adaptation-wheel {
-    width: 120px;
-    height: 120px;
-    animation: heavy-crank 8s cubic-bezier(0.65, 0, 0.35, 1) infinite; 
-    transition: filter 0.5s ease, opacity 0.5s ease;
-  }
-
-  @keyframes heavy-crank {
-    0%, 80% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Section Header Styling */
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .section-header h2 {
-    font-size: 2rem;
-    margin: 0;
-    color: var(--text-main);
-  }
-
-  .header-line {
-    flex-grow: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border-color), transparent);
-  }
-
-  /* Modern Grid Layout */
-  .project-grid {
-    display: grid;
-    /* Fixed Card Size: Replaced 1fr with minmax(280px, 350px) to prevent wide stretching */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 350px)); 
-    justify-content: start;
-    gap: 2.5rem;
-    padding-bottom: 6rem;
-  }
-
-  /* Premium Card Design */
-  .project-card {
-    display: flex;
-    flex-direction: column;             
-    text-decoration: none;      
-    color: inherit;             
-    background-color: var(--bg-card);
-    border-radius: 16px; /* Softer corners */
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-base);
-  }
-
-  .project-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-hover);
-    border-color: rgba(99, 102, 241, 0.3);
-  }
-
-  .thumbnail-wrapper {
-    width: 100%;
-    background-color: var(--bg-card);
-    transition: background-color 0.4s ease;
-    overflow: hidden; 
-  }
-
-  .thumbnail {
-    width: 100%;
-    height: auto;
-    object-fit: cover; 
-    display: block;
-    transition: transform 0.6s ease;
-  }
-
-  .project-card:hover .thumbnail {
-    transform: scale(1.05);
-  }
-
-  .card-content {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-
-  .card-content h3 {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.4rem;
-    color: var(--text-main);
-  }
-
-  .card-content p {
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    flex-grow: 1; /* Pushes the tags/button to the bottom */
-  }
-
-  /* Tinted Soft Badges */
-  .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .tech-badge {
-    background-color: var(--badge-bg);
-    color: var(--badge-text);
-    padding: 0.35rem 0.85rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-
-  .btn-learn-more {
-    display: inline-flex;
-    align-items: center;
-    color: var(--accent);
-    font-weight: 600;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.95rem;
-    transition: gap 0.2s ease;
-    gap: 0.25rem;
-  }
-
-  .project-card:hover .btn-learn-more {
-    gap: 0.5rem; /* The arrow slides to the right smoothly */
-  }
-
-  /* Mobile Responsiveness */
-  @media (max-width: 900px) {
-
-    .project-grid {
-      justify-content: center;
-    }
-
-    .hero {
-      flex-direction: column-reverse;
-      text-align: center;
-      gap: 3rem;
-      padding: 4rem 0;
-    }
-    .hero-left {
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .bio-text {
-      max-width: 100%;
-    }
-    .bio-text h1 {
-      font-size: 2.75rem;
-    }
-    .hero-links {
-      justify-content: center;
-    }
-    .hero-right {
-      align-self: center; 
-      margin-top: 0; 
-    }
-    .section-header h2 {
-      font-size: 1.75rem;
-    }
-  }
-</style>
