@@ -3,7 +3,8 @@ import MainLayout from '../layouts/Layout.astro';
 import DotField from '../components/DotField.jsx';
 
 // @ts-ignore
-const projects = Object.values(import.meta.glob('./projects/*.md', { eager: true })) as any[];
+const projects = (Object.values(import.meta.glob('./projects/*.md', { eager: true })) as any[])
+  .sort((a, b) => (a.frontmatter.order ?? 0) - (b.frontmatter.order ?? 0));
 ---
 <MainLayout>
     <header class="hero">

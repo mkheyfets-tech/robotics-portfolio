@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+<title id="title">Bomberman Escape AI</title>
+<desc id="desc">A schematic game board showing a planned escape route around walls, monsters, and a bomb.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#24243d"/><stop offset="1" stop-color="#18181b"/></linearGradient>
+  <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="52" height="52" rx="8" fill="#2c2c40"/></pattern>
+</defs>
+<rect width="960" height="600" fill="url(#bg)"/>
+<g font-family="Arial, sans-serif">
+  <text x="56" y="68" fill="#a5b4fc" font-size="18" font-weight="700" letter-spacing="4">AUTONOMOUS AGENTS</text>
+  <text x="56" y="122" fill="#f4f4f5" font-size="42" font-weight="700">Bomberman Escape AI</text>
+  <text x="56" y="157" fill="#a1a1aa" font-size="20">Plan a route. Anticipate danger. Reach the exit.</text>
+</g>
+<g transform="translate(56 204)">
+  <rect width="560" height="336" rx="12" fill="url(#grid)"/>
+<rect x="62" y="62" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="118" y="62" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="230" y="6" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="230" y="62" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="230" y="118" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="62" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="118" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="174" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="342" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="398" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="454" y="174" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="342" y="286" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+<rect x="398" y="286" width="44" height="44" rx="6" fill="#53536c" stroke="#6b6b86" stroke-width="2"/>
+  <path d="M28 28H196V140H140V252H308V84H532V252" fill="none" stroke="#818cf8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 12"/>
+  <rect x="10" y="10" width="36" height="36" rx="11" fill="#c7d2fe"/>
+  <rect x="16" y="19" width="24" height="13" rx="5" fill="#35335c"/>
+  <circle cx="23" cy="25" r="2" fill="white"/><circle cx="33" cy="25" r="2" fill="white"/>
+  <rect x="512" y="230" width="40" height="44" rx="8" fill="#34d399"/>
+  <path d="M523 252h18m-7-7 7 7-7 7" fill="none" stroke="#064e3b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="364" cy="252" r="20" fill="#18181b" stroke="#fbbf24" stroke-width="3"/>
+  <path d="M368 232q-2-18 12-18" fill="none" stroke="#fbbf24" stroke-width="3"/>
+  <path d="m380 206 0 8 8-4m-8 4 6 7" stroke="#fbbf24" stroke-width="2"/>
+  <rect x="456" y="120" width="38" height="37" rx="12" fill="#fb7185"/>
+  <circle cx="467" cy="134" r="4" fill="#4c0519"/><circle cx="483" cy="134" r="4" fill="#4c0519"/>
+</g>
+<g transform="translate(666 234)" font-family="Arial, sans-serif">
+  <text fill="#f4f4f5" font-size="24" font-weight="700">Search + learning</text>
+  <text y="43" fill="#a1a1aa" font-size="19">A* pathfinding</text>
+  <text y="79" fill="#a1a1aa" font-size="19">Minimax search</text>
+  <text y="115" fill="#a1a1aa" font-size="19">Reinforcement learning</text>
+  <path d="M0 149H238" stroke="#45455d"/>
+  <circle cy="184" r="6" fill="#818cf8"/><text x="19" y="190" fill="#c7d2fe" font-size="18">Planned route</text>
+  <circle cy="224" r="6" fill="#fbbf24"/><text x="19" y="230" fill="#c7d2fe" font-size="18">Bomb placement</text>
+  <circle cy="264" r="6" fill="#34d399"/><text x="19" y="270" fill="#c7d2fe" font-size="18">Escape objective</text>
+</g>
+</svg>
